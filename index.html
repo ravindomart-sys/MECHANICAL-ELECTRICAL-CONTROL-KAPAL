@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ship Integrated Mechanical & Electrical Control System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-navy: #0a192f;
+            --secondary-navy: #112240;
+            --accent-blue: #64ffda;
+            --steel-grey: #8892b0;
+            --light-grey: #ccd6f6;
+            --white: #e6f1ff;
+            --danger: #ff5f5f;
+            --success: #64ffda;
+            --warning: #ffd700;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-navy);
+            color: var(--steel-grey);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            color: var(--light-grey);
+            font-weight: 700;
+        }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .brand {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+
+        .brand span {
+            color: var(--light-grey);
+            font-weight: 400;
+            font-size: 0.9rem;
+            display: block;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--light-grey);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent-blue);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(10, 25, 47, 0.8), rgba(10, 25, 47, 0.6)), url('https://image.qwenlm.ai/public_source/3c531aae-7fbd-4843-be46-df3a89799f38/11ab21d1f-173b-4d62-ac32-23f6e0fd30dc.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 1rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--accent-blue);
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.3s backwards;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: 1px solid var(--accent-blue);
+            color: var(--accent-blue);
+            background: transparent;
+            font-family: 'JetBrains Mono', monospace;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            border-radius: 4px;
+            animation: fadeInUp 1s ease-out 0.6s backwards;
+        }
+
+        .btn:hover {
+            background: rgba(100, 255, 218, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Sections General */
+        section {
+            padding: 5rem 10%;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title::before {
+            content: counter(section) ".";
+            counter-increment: section;
+            color: var(--accent-blue);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+        }
+
+        body {
+            counter-reset: section;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .text-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .img-content img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+            transition: transform 0.3s;
+        }
+
+        .img-content img:hover {
+            transform: scale(1.02);
+        }
+
+        /* Interactive Diagrams */
+        .diagram-box {
+            background: var(--secondary-navy);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid rgba(136, 146, 176, 0.2);
+            margin-top: 2rem;
+        }
+
+        .control-loop {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .loop-component {
+            background: var(--primary-navy);
+            border: 1px solid var(--accent-blue);
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            color: var(--light-grey);
+            position: relative;
+            min-width: 150px;
+            text-align: center;
+        }
+
+        .arrow {
+            font-size: 1.5rem;
+            color: var(--accent-blue);
+        }
+
+        .feedback-line {
+            width: 2px;
+            height: 50px;
+            background: var(--steel-grey);
+            position: relative;
+        }
+
+        .feedback-line::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -4px;
+            width: 10px;
+            height: 10px;
+            border-left: 2px solid var(--steel-grey);
+            border-bottom: 2px solid var(--steel-grey);
+        }
+
+        /* Simulation UI */
+        .sim-panel {
+            background: #000;
+            border: 2px solid var(--steel-grey);
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--success);
+        }
+
+        .sim-display {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 1rem;
+        }
+
+        .sim-controls {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .sim-btn {
+            background: var(--secondary-navy);
+            border: 1px solid var(--steel-grey);
+            color: var(--light-grey);
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .sim-btn.active {
+            background: var(--accent-blue);
+            color: var(--primary-navy);
+            font-weight: bold;
+        }
+
+        .status-light {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #333;
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        .status-light.on {
+            background: var(--success);
+            box-shadow: 0 0 10px var(--success);
+        }
+
+        .status-light.alert {
+            background: var(--danger);
+            box-shadow: 0 0 10px var(--danger);
+            animation: blink 0.5s infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0.5; }
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary-navy);
+            padding: 3rem 10%;
+            text-align: center;
+            border-top: 1px solid rgba(136, 146, 176, 0.2);
+        }
+
+        .footer-content h3 {
+            color: var(--light-grey);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-content p {
+            color: var(--steel-grey);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .content-grid { grid-template-columns: 1fr; }
+            nav { display: none; } /* Simplified for mobile */
+            section { padding: 3rem 5%; }
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand">
+            SHIP CONTROL SYSTEM
+            <span>Politeknik Pelayaran</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#theory">Theory</a></li>
+                <li><a href="#engine">Engine</a></li>
+                <li><a href="#pms">PMS</a></li>
+                <li><a href="#automation">Automation</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Ship Integrated Mechanical &<br>Electrical Control System</h1>
+        <p>Integrated Ship Automation & Control Engineering</p>
+        <a href="#about" class="btn">EXPLORE SYSTEM</a>
+    </section>
+
+    <section id="about">
+        <h2 class="section-title">About This Course</h2>
+        <div class="content-grid">
+            <div class="text-content">
+                <p>Mata kuliah ini dirancang untuk membekali Taruna Teknika dengan pemahaman mendalam mengenai sistem kontrol terintegrasi pada kapal modern. Fokus pembelajaran mencakup interaksi antara sistem mekanikal, elektrikal, dan otomatisasi.</p>
+                <p><strong>Tujuan Pembelajaran:</strong></p>
+                <ul style="list-style: none; margin-left: 0;">
+                    <li style="margin-bottom: 0.5rem;">✓ Memahami prinsip dasar Closed Loop Control.</li>
+                    <li style="margin-bottom: 0.5rem;">✓ Menganalisis sistem Governor Main Engine.</li>
+                    <li style="margin-bottom: 0.5rem;">✓ Mengoperasikan Power Management System (PMS).</li>
+                    <li style="margin-bottom: 0.5rem;">✓ Troubleshooting sistem otomatisasi kapal.</li>
+                </ul>
+            </div>
+            <div class="img-content">
+                <!-- Using a placeholder for course illustration if needed, or reusing tech image -->
+                <img src="https://image.qwenlm.ai/public_source/3c531aae-7fbd-4843-be46-df3a89799f38/1f24b92d4-67e9-4330-adbe-5174e31bd602.png" alt="Control Theory Illustration">
+            </div>
+        </div>
+    </section>
+
+    <section id="theory">
+        <h2 class="section-title">Basic Control Theory</h2>
+        <div class="content-grid">
+            <div class="img-content">
+                <img src="https://image.qwenlm.ai/public_source/3c531aae-7fbd-4843-be46-df3a89799f38/1f24b92d4-67e9-4330-adbe-5174e31bd602.png" alt="Control Diagram">
+            </div>
+            <div class="text-content">
+                <p>Sistem kontrol kapal umumnya menggunakan prinsip <strong>Closed Loop (Umpan Balik)</strong>. Perbedaan utama dengan Open Loop adalah adanya sensor yang memberikan feedback ke controller untuk mengoreksi error.</p>
+                
+                <div class="diagram-box">
+                    <h4 style="margin-bottom: 1rem; color: var(--accent-blue);">Interactive Block Diagram</h4>
+                    <div class="control-loop">
+                        <div class="loop-component">Set Point (SP)</div>
+                        <div class="arrow">↓</div>
+                        <div class="loop-component" style="border-color: var(--warning);">Comparator (+/-)</div>
+                        <div class="arrow">↓ (Error Signal)</div>
+                        <div class="loop-component" style="border-color: var(--accent-blue);">Controller (PID)</div>
+                        <div class="arrow">↓</div>
+                        <div class="loop-component" style="border-color: var(--success);">Actuator / Plant</div>
+                        <div class="arrow">→ Output</div>
+                        
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-top: 1rem;">
+                            <div class="feedback-line"></div>
+                            <div class="loop-component" style="min-width: 100px; font-size: 0.8rem;">Sensor Feedback</div>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.8rem; margin-top: 1rem; color: var(--steel-grey);">*Diagram di atas menunjukkan alur koreksi error otomatis pada sistem kontrol kapal.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="engine">
+        <h2 class="section-title">Main Engine Control System</h2>
+        <div class="content-grid">
+            <div class="text-content">
+                <p>Sistem governor bertugas menjaga kecepatan mesin (RPM) tetap stabil meskipun beban berubah. Governor mendeteksi perubahan RPM melalui flyweight dan mengatur rack bahan bakar.</p>
+                <p><strong>Failure Cases:</strong></p>
+                <ul>
+                    <li><strong>Overspeed:</strong> Ketika beban tiba-tiba lepas (propeller out of water), governor harus menutup fuel rack dengan cepat.</li>
+                    <li><strong>Hunting:</strong> Osilasi RPM yang tidak stabil akibat sensitivitas governor yang terlalu tinggi atau ada udara dalam sistem hidrolik.</li>
+                </ul>
+            </div>
+            <div class="img-content">
+                <img src="https://image.qwenlm.ai/public_source/3c531aae-7fbd-4843-be46-df3a89799f38/1cc33fb20-2df0-465e-9686-a37baac0d8a9.png" alt="Main Engine Governor">
+            </div>
+        </div>
+    </section>
+
+    <section id="generator">
+        <h2 class="section-title">Generator & AVR System</h2>
+        <div class="content-grid">
+            <div class="img-content">
+                <img src="https://image.qwenlm.ai/public_source/3c531aae-7fbd-4843-be46-df3a89799f38/1a16d9208-1a2a-409a-967e-3eb444bc9593.png" alt="Generator AVR">
+            </div>
+            <div class="text-content">
+                <p>Automatic Voltage Regulator (AVR) menjaga tegangan output generator tetap konstan (misal 440V) dengan mengatur arus eksitasi pada rotor.</p>
+                <p><strong>Hubungan RPM dan Frekuensi:</strong></p>
+                <div class="mono" style="background: var(--secondary-navy); padding: 1rem; border-radius: 4px; margin: 1rem 0;">
+                    f = (P × N) / 120<br>
+                    <span style="font-size: 0.8rem; color: var(--steel-grey);">f = Frekuensi (Hz), P = Jumlah Kutub, N = RPM</span>
+                </div>
+                <p>Stabilitas tegangan sangat krusial untuk mencegah kerusakan peralatan elektronik sensitif di kapal.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="pms">
+        <h2 class="section-title">Power Management System (PMS)</h2>
+        <div class="content-grid">
+            <div class="text-content">
+                <p>PMS adalah otak dari distribusi daya kapal. Sistem ini melakukan:</p>
+                <ul>
+                    <li><strong>Load Sharing:</strong> Membagi beban aktif (kW) dan reaktif (kVAR) secara merata antar generator yang paralel.</li>
+                    <li><strong>Auto Start/Stop:</strong> Menyalakan genset cadangan jika beban melebihi 80% kapasitas.</li>
+                    <li><strong>Load Shedding:</strong> Memutus beban non-esensial (AC Galley, dll) saat terjadi overload untuk mencegah blackout total.</li>
+                </ul>
+                
+                <div class="sim-panel" style="margin-top: 2rem;">
+                    <h4 style="color: var(--white); margin-bottom: 1rem;">PMS Simulation Logic</h4>
+                    <div class="sim-display">
+                        <div>
+                            <div>TOTAL LOAD: <span id="loadVal">450</span> kW</div>
+                            <div>FREQUENCY: <span id="freqVal">60.0</span> Hz</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div>GEN 1: <span class="status-light on"></span> ON</div>
+                            <div>GEN 2: <span class="status-light" id="gen2Status"></span> <span id="gen2Text">STBY</span></div>
+                        </div>
+                    </div>
+                    <div class="sim-controls">
+                        <button class="sim-btn" onclick="addLoad()">+ Add Load (Thruster)</button>
+                        <button class="sim-btn" onclick="removeLoad()">- Reduce Load</button>
+                        <button class="sim-btn" onclick="simulateBlackout()" style="border-color: var(--danger); color: var(--danger);">SIMULATE BLACKOUT</button>
+                        <button class="sim-btn" onclick="resetSim()">RESET SYSTEM</button>
+                    </div>
+                    <div id="pmsLog" style="margin-top: 1rem; font-size: 0.8rem; color: var(--steel-grey); height: 60px; overflow: hidden;">
+                        > System Initialized...<br>
+                        > Gen 1 Running at 450kW Load.
+                    </div>
+                </div>
+            </div>
+            <div class="img-content">
+                <img src="https://image.qwenlm.ai/public_source/3c531aae-7fbd-4843-be46-df3a89799f38/104d2450e-da1d-4e37-b9a0-689cf8a66536.png" alt="PMS Dashboard">
+            </div>
+        </div>
+    </section>
+
+    <section id="steering">
+        <h2 class="section-title">Steering & Autopilot Control</h2>
+        <div class="content-grid">
+            <div class="img-content">
+                <img src="https://image.qwenlm.ai/public_source/3c531aae-7fbd-4843-be46-df3a89799f38/1007ca531-33fb-421f-bd0b-32bf50555fcb.png" alt="Steering Gear">
+            </div>
+            <div class="text-content">
+                <p>Sistem kemudi modern menggunakan闭环 kontrol (Closed Loop). Autopilot menerima data heading dari Gyro Compass dan membandingkannya dengan Course yang disetel.</p>
+                <p><strong>Hydraulic Actuator:</strong></p>
+                <p>Sinyal error dari autopilot menggerakkan solenoid valve pada unit hidrolik, yang kemudian menggerakkan ram untuk memutar rudder. Feedback potentiometer pada rudder stock mengirimkan posisi aktual kembali ke kontroler.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="hvac">
+        <h2 class="section-title">HVAC & Refrigeration Control</h2>
+        <div class="content-grid">
+            <div class="text-content">
+                <p>Kontrol suhu di kapal sangat vital untuk kenyamanan awak dan keselamatan kargo (Reefer).</p>
+                <p><strong>Thermostat Logic:</strong></p>
+                <p>Menggunakan kontrol On/Off atau PID. Jika suhu ruangan > Set Point, kompresor menyala. Untuk mencegah short-cycling (nyala-mati terlalu cepat), terdapat Differential Gap (misal: Nyala di 24°C, Mati di 22°C).</p>
+                <p><strong>Safety Controls:</strong></p>
+                <ul>
+                    <li>High Pressure Cut-out (Kondensor tersumbat)</li>
+                    <li>Low Pressure Cut-out (Kehilangan refrigerant)</li>
+                    <li>Oil Pressure Failure Switch</li>
+                </ul>
+            </div>
+            <div class="img-content">
+                <img src="https://image.qwenlm.ai/public_source/3c531aae-7fbd-4843-be46-df3a89799f38/187dbc128-39ee-45e8-8119-a6f89d355865.png" alt="HVAC System">
+            </div>
+        </div>
+    </section>
+
+    <section id="automation">
+        <h2 class="section-title">Integrated Automation Concept</h2>
+        <div class="content-grid">
+            <div class="img-content">
+                <img src="https://image.qwenlm.ai/public_source/3c531aae-7fbd-4843-be46-df3a89799f38/1231cd012-bc03-4c03-bf28-a7a6ea88ff4e.png" alt="Automation PLC">
+            </div>
+            <div class="text-content">
+                <p>Kapal modern mengintegrasikan semua sistem di atas menggunakan <strong>PLC (Programmable Logic Controller)</strong> dan <strong>DCS (Distributed Control System)</strong>.</p>
+                <p><strong>Alarm Monitoring System (AMS):</strong></p>
+                <p>Sensor di seluruh kapal (suhu, tekanan, level) terhubung ke central computer. Jika parameter melampaui batas aman, alarm visual dan audio akan aktif di Engine Control Room (ECR) dan Bridge.</p>
+                <p>Integrasi ini memungkinkan <strong>Unmanned Machinery Space (UMS)</strong>, di mana mesin dapat beroperasi tanpa penjagaan manusia secara terus menerus.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="case-study" style="background: var(--secondary-navy);">
+        <h2 class="section-title">Case Study Analysis</h2>
+        <div class="content-grid">
+            <div class="text-content">
+                <h3 style="color: var(--accent-blue); margin-bottom: 1rem;">Scenario: Sudden Blackout</h3>
+                <p><strong>Gejala:</strong> Lampu mati, mesin utama berhenti, kemudi tidak berfungsi.</p>
+                <p><strong>Analisis Teknis:</strong></p>
+                <ol style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                    <li>Cek apakah terjadi <em>Trip</em> pada Main Circuit Breaker (ACB) akibat overload atau short circuit.</li>
+                    <li>Periksa sistem bahan bakar (clogged filter, air in fuel).</li>
+                    <li>Cek Governor linkage yang macet.</li>
+                </ol>
+                <p><strong>Tindakan Perbaikan:</strong></p>
+                <p>Aktifkan Emergency Generator (harus menyala otomatis dalam 45 detik menurut SOLAS). Reset ACB setelah penyebab trip ditemukan. Start ulang Main Generator secara manual jika auto-start gagal.</p>
+            </div>
+            <div class="img-content">
+                <div style="background: #000; padding: 2rem; border: 1px solid var(--danger); border-radius: 8px; text-align: center;">
+                    <h3 style="color: var(--danger); font-size: 3rem; margin-bottom: 1rem;">⚠ CRITICAL ALERT</h3>
+                    <p style="color: var(--white);">MAIN BUSBAR VOLTAGE: 0 V</p>
+                    <p style="color: var(--white);">FREQUENCY: 0 Hz</p>
+                    <p style="color: var(--steel-grey); margin-top: 2rem;">EMERGENCY GENERATOR: STARTING...</p>
+                    <div style="width: 100%; height: 4px; background: #333; margin-top: 1rem; border-radius: 2px;">
+                        <div style="width: 0%; height: 100%; background: var(--danger); animation: loadBar 2s infinite;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <h3>SHIP INTEGRATED MECHANICAL & ELECTRICAL CONTROL SYSTEM</h3>
+            <p>Dosen Pengampu: <strong>Rafael Sukirno, CE</strong></p>
+            <p>Politeknik Pelayaran (POLTEKPEL)</p>
+            <p style="margin-top: 1rem; font-size: 0.8rem; opacity: 0.7;">© 2024 Academic Module for Marine Engineering Cadets</p>
+        </div>
+    </footer>
+
+    <script>
+        // PMS Simulation Logic
+        let totalLoad = 450;
+        let gen1Load = 450;
+        let gen2Active = false;
+        let isBlackout = false;
+
+        const loadDisplay = document.getElementById('loadVal');
+        const freqDisplay = document.getElementById('freqVal');
+        const gen2Status = document.getElementById('gen2Status');
+        const gen2Text = document.getElementById('gen2Text');
+        const logBox = document.getElementById('pmsLog');
+
+        function log(message) {
+            const time = new Date().toLocaleTimeString();
+            logBox.innerHTML = `> [${time}] ${message}<br>` + logBox.innerHTML;
+        }
+
+        function updateDisplay() {
+            if (isBlackout) {
+                loadDisplay.innerText = "0";
+                freqDisplay.innerText = "0.0";
+                freqDisplay.style.color = "var(--danger)";
+                return;
+            }
+
+            loadDisplay.innerText = totalLoad;
+            
+            // Frequency drops slightly as load increases (Droop characteristic)
+            let freq = 60.0 - ((totalLoad - 450) / 100); 
+            if (freq < 57.0) freq = 57.0; // Minimum safe freq
+            if (freq > 60.5) freq = 60.5;
+            freqDisplay.innerText = freq.toFixed(1);
+
+            if (freq < 58.5 && !gen2Active) {
+                startGen2();
+            } else if (totalLoad < 300 && gen2Active) {
+                stopGen2();
+            }
+        }
+
+        function startGen2() {
+            gen2Active = true;
+            gen2Status.classList.add('on');
+            gen2Text.innerText = "RUNNING";
+            gen2Text.style.color = "var(--success)";
+            log("PMS: Low Frequency detected. Auto Starting Gen 2...");
+            setTimeout(() => {
+                log("PMS: Gen 2 Synchronized and Closed ACB.");
+                // Share load roughly
+                gen1Load = totalLoad / 2;
+            }, 1500);
+        }
+
+        function stopGen2() {
+            gen2Active = false;
+            gen2Status.classList.remove('on');
+            gen2Text.innerText = "STBY";
+            gen2Text.style.color = "var(--steel-grey)";
+            log("PMS: Low Load detected. Stopping Gen 2...");
+        }
+
+        function addLoad() {
+            if (isBlackout) return;
+            totalLoad += 150;
+            log(`Load Increased by 150kW. Total: ${totalLoad}kW`);
+            updateDisplay();
+        }
+
+        function removeLoad() {
+            if (isBlackout) return;
+            if (totalLoad > 100) totalLoad -= 100;
+            log(`Load Reduced. Total: ${totalLoad}kW`);
+            updateDisplay();
+        }
+
+        function simulateBlackout() {
+            isBlackout = true;
+            gen2Active = false;
+            gen2Status.classList.remove('on');
+            log("CRITICAL: MAIN BUSBAR TRIP! BLACKOUT!");
+            updateDisplay();
+            
+            setTimeout(() => {
+                log("Emergency Generator Started.");
+                setTimeout(() => {
+                    log("Restoring Power...");
+                    isBlackout = false;
+                    totalLoad = 200; // Essential loads only
+                    updateDisplay();
+                    log("Power Restored to Essential Services.");
+                }, 2000);
+            }, 1000);
+        }
+
+        function resetSim() {
+            isBlackout = false;
+            totalLoad = 450;
+            gen2Active = false;
+            gen2Status.classList.remove('on');
+            gen2Text.innerText = "STBY";
+            gen2Text.style.color = "var(--steel-grey)";
+            log("System Reset to Normal Operation.");
+            updateDisplay();
+        }
+
+        // Initialize
+        updateDisplay();
+
+        // CSS Animation for blackout bar
+        const styleSheet = document.createElement("style");
+        styleSheet.innerText = `
+            @keyframes loadBar {
+                0% { width: 0%; }
+                50% { width: 100%; }
+                100% { width: 0%; }
+            }
+        `;
+        document.head.appendChild(styleSheet);
+    </script>
+</body>
+</html>
+
